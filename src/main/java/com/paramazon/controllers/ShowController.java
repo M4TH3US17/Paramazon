@@ -29,7 +29,7 @@ public class ShowController {
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<ShowEntity> findById(@PathVariable Long id) {
+	public ResponseEntity<ShowEntity> findById(@PathVariable Long id){
 		return ResponseEntity.ok().body(service.findById(id));
 	}
 	
