@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -32,6 +33,7 @@ public class ShowEntity implements Serializable {
 	@JsonFormat(pattern = "dd-MM-yyyy'T'HH:mm'Z'", timezone = "GMT")
 	private LocalDateTime date;
 	
+	@NotEmpty(message = "Os shows não podem ser vázios")
 	@OneToMany(mappedBy = "show", cascade = {CascadeType.REFRESH, CascadeType.MERGE})
 	private List<SingerEntity> singers = new ArrayList<>();
 	

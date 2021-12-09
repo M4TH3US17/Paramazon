@@ -2,6 +2,8 @@ package com.paramazon.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +34,7 @@ public class SingerController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<SingerEntity> save(@RequestBody SingerEntity obj){
+	public ResponseEntity<SingerEntity> save(@Valid @RequestBody SingerEntity obj){
 		return ResponseEntity.ok().body(obj);
 	}
 }

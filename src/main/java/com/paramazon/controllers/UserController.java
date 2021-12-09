@@ -2,6 +2,8 @@ package com.paramazon.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,7 +35,7 @@ public class UserController {
 	}
 
 	@PostMapping
-	public ResponseEntity<UserEntity> save(@RequestBody UserEntity obj) {
+	public ResponseEntity<UserEntity> save(@Valid @RequestBody UserEntity obj) {
 		UserEntity entity = service.insert(obj);
 		return ResponseEntity.ok().body(entity);
 	}

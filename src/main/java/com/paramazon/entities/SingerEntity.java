@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "tb_singers")
@@ -18,9 +19,14 @@ public class SingerEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@NotEmpty(message = "Nome não pode ser vázio")
 	private String name;
+	
+	@NotEmpty(message = "Foto não pode ser vázia")
 	private String photograph;
 	
+	@NotEmpty(message = "Show não pode ser vázio")
 	@ManyToOne
 	private ShowEntity show;
 	
