@@ -1,7 +1,7 @@
 package com.paramazon.entities;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -24,8 +27,10 @@ public class ShowEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm'Z'", timezone = "GMT")
-	private Instant date;
+
+	@DateTimeFormat(iso = ISO.DATE_TIME)
+	@JsonFormat(pattern = "dd-MM-yyyy'T'HH:mm'Z'", timezone = "GMT")
+	private LocalDateTime date;
 	
 	@OneToMany(mappedBy = "show", cascade = {CascadeType.REFRESH, CascadeType.MERGE})
 	private List<SingerEntity> singers = new ArrayList<>();
@@ -33,10 +38,31 @@ public class ShowEntity implements Serializable {
 	public ShowEntity() {
 	}
 
-	public ShowEntity(Long id, Instant date) {
+	
+
+	public ShowEntity(Long id, LocalDateTime date, List<SingerEntity> singers) {
+		super();
 		this.id = id;
 		this.date = date;
+		this.singers = singers;
 	}
+
+
+	public LocalDateTime getDate() {
+		return date;
+	}
+
+
+	public void setDate(LocalDateTime date) {
+		this.date = date;
+	}
+
+
+
+	public void setSingers(List<SingerEntity> singers) {
+		this.singers = singers;
+	}
+
 
 	public Long getId() {
 		return id;
@@ -46,13 +72,6 @@ public class ShowEntity implements Serializable {
 		this.id = id;
 	}
 
-	public Instant getDate() {
-		return date;
-	}
-
-	public void setDate(Instant date) {
-		this.date = date;
-	}
 
 	public List<SingerEntity> getSingers() {
 		return singers;
