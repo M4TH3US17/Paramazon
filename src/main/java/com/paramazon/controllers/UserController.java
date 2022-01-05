@@ -2,7 +2,10 @@ package com.paramazon.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,23 +26,23 @@ public class UserController {
 	private UserService service;
 
 	@GetMapping
-	public ResponseEntity<List<UserEntity>> findAll() {
+	public ResponseEntity<List<UserEntity>> findAll() throws Exception{
 		return ResponseEntity.ok().body(service.findAll());
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<UserEntity> findById(@PathVariable Long id) {
+	public ResponseEntity<UserEntity> findById(@PathVariable Long id) throws Exception{
 		return ResponseEntity.ok().body(service.findById(id));
 	}
 
 	@PostMapping
-	public ResponseEntity<UserEntity> save(@RequestBody UserEntity obj) {
+	public ResponseEntity<UserEntity> save(@Valid @RequestBody UserEntity obj) throws DataIntegrityViolationException{
 		UserEntity entity = service.insert(obj);
 		return ResponseEntity.ok().body(entity);
 	}
 	
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id){
+	public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception{
 		service.delete(id);
 		return ResponseEntity.ok().build();
 	}
